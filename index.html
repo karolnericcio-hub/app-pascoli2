@@ -1,13 +1,275 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Giovanni Pascoli</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giovanni Pascoli | Il Simbolismo Italiano</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c5a059;
+            --dark: #1a1a1a;
+            --cream: #f9f7f2;
+        }
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--cream);
+            color: var(--dark);
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.7)), url('https://images.unsplash.com/photo-1502230831726-fe5506c6cb39?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .gold-border {
+            border-bottom: 2px solid var(--gold);
+        }
+        .nav-link {
+            font-family: 'Montserrat', sans-serif;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: var(--gold);
+        }
+        .card-zoom:hover img {
+            transform: scale(1.05);
+        }
+        .fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        .loader {
+            border-top-color: var(--gold);
+            animation: spinner 1.5s linear infinite;
+        }
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script type="module" src="/src/index.jsx"></script>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-effect py-4 px-8 flex justify-between items-center shadow-sm">
+        <div class="text-2xl font-bold tracking-tighter text-dark italic">G. <span class="text-[#c5a059]">Pascoli</span></div>
+        <div class="hidden md:flex space-x-8">
+            <a href="#home" class="nav-link text-xs uppercase tracking-widest font-semibold">Home</a>
+            <a href="#biografia" class="nav-link text-xs uppercase tracking-widest font-semibold">Biografia</a>
+            <a href="#poetica" class="nav-link text-xs uppercase tracking-widest font-semibold">La Poetica</a>
+            <a href="#opere" class="nav-link text-xs uppercase tracking-widest font-semibold">Opere Maggiori</a>
+        </div>
+        <button onclick="scrollToSection('gelsomino')" class="bg-[#c5a059] text-white px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-black transition-all">Special: Il Gelsomino</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="h-screen flex items-center justify-center hero-gradient text-white text-center px-4">
+        <div class="fade-in">
+            <h2 class="text-xl md:text-2xl font-light italic mb-2">Simbolismo e Mistero</h2>
+            <h1 class="text-5xl md:text-9xl font-bold mb-6 tracking-tight">Pascoli</h1>
+            <div class="w-24 h-1 bg-[#c5a059] mx-auto mb-8"></div>
+            <p class="max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed">
+                "Il mondo è grande, ma noi siamo piccoli; e però, per quanto grandi si sia, non si vede mai tutto."
+            </p>
+        </div>
+    </header>
+
+    <!-- Bio & Image Section -->
+    <section id="biografia" class="py-24 px-8 md:px-24 grid md:grid-cols-2 gap-16 items-center bg-white">
+        <div>
+            <h2 class="text-4xl font-bold mb-8 gold-border inline-block pb-2">Un'Esistenza Segnata</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+                Nato a San Mauro di Romagna nel 1855, la vita di Pascoli fu sconvolta dall'omicidio del padre, il 10 agosto 1867. Questo trauma originario divenne il perno della sua intera produzione poetica: il tentativo incessante di ricostruire il <strong>"Nido"</strong> familiare infranto.
+            </p>
+            <p class="text-gray-700 leading-relaxed mb-8">
+                Professore universitario e successore di Carducci a Bologna, Pascoli seppe innovare profondamente la metrica italiana, introducendo frammentarietà, onomatopee e un lessico che spazia dal tecnicismo botanico alla lingua quotidiana.
+            </p>
+            <button onclick="openModal('bio')" class="border-2 border-dark px-8 py-3 font-semibold hover:bg-dark hover:text-white transition-all">Approfondisci Vita</button>
+        </div>
+        <div id="pascoli-img-container" class="relative group card-zoom overflow-hidden rounded-lg shadow-2xl h-[500px] flex items-center justify-center bg-gray-100">
+            <!-- Immagine aggiornata con URL fornito dall'utente -->
+            <img id="img-pascoli" class="w-full h-full object-cover transition-transform duration-700" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBdw_M1qy3RX2Vn1eo9zHsgvJvgB-s-N2Xt5tfz-oFVUbEHq1Nwg99fhNdq60A5eISeJAEV4w18dIHGna9xxb4MSjJwwRlb0I_fQ1pNAo&s=10" alt="Ritratto storico di Giovanni Pascoli">
+        </div>
+    </section>
+
+    <!-- Poetica: Il Fanciullino -->
+    <section id="poetica" class="py-24 px-8 md:px-24 bg-[#1a1a1a] text-white">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">La Poetica del Fanciullino</h2>
+            <div class="w-16 h-1 bg-[#c5a059] mx-auto"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-12">
+            <div class="p-8 border border-gray-700 hover:border-[#c5a059] transition-colors">
+                <h3 class="text-2xl font-bold mb-4 italic">Visione Intuitiva</h3>
+                <p class="text-gray-400 font-light">Il poeta è colui che sa guardare il mondo con gli occhi stupiti di un bambino, scoprendo il mistero nelle piccole cose.</p>
+            </div>
+            <div class="p-8 border border-gray-700 hover:border-[#c5a059] transition-colors">
+                <h3 class="text-2xl font-bold mb-4 italic">Simbolismo</h3>
+                <p class="text-gray-400 font-light">La realtà non è oggettiva; ogni elemento naturale è un simbolo che rimanda a significati profondi, paure ancestrali e memorie.</p>
+            </div>
+            <div class="p-8 border border-gray-700 hover:border-[#c5a059] transition-colors">
+                <h3 class="text-2xl font-bold mb-4 italic">Onomatopea</h3>
+                <p class="text-gray-400 font-light">Il linguaggio fonosimbolico (fru-fru, chiù) serve a catturare l'anima segreta della natura senza mediazioni logiche.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special: Il Gelsomino Notturno -->
+    <section id="gelsomino" class="py-24 px-8 md:px-24 bg-[#f9f7f2]">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div id="gelsomino-img-container" class="relative overflow-hidden rounded-lg shadow-xl h-[600px] flex items-center justify-center bg-gray-200">
+                    <div id="loader-gelsomino" class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+                    <img id="img-gelsomino" class="w-full h-full object-cover opacity-0 transition-opacity duration-1000" src="" alt="Gelsomino Notturno">
+                    <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-40 p-6 text-white backdrop-blur-sm">
+                        <p class="italic">"E s'aprono i fiori notturni, nell'ora che penso a' miei cari."</p>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-5xl font-bold mb-6 italic text-[#c5a059]">Il Gelsomino Notturno</h2>
+                    <h4 class="text-xl font-bold mb-4 uppercase tracking-tighter">Analisi dell'Opera</h4>
+                    <p class="text-gray-700 leading-relaxed mb-6 italic">
+                        Scritta in occasione delle nozze dell'amico Gabriele Briganti, questa poesia rappresenta il culmine del simbolismo pascoliano.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="text-[#c5a059] font-bold text-2xl mr-4">01</div>
+                            <div>
+                                <h5 class="font-bold">Eros e Thanatos</h5>
+                                <p class="text-sm text-gray-600">L'apertura dei fiori simboleggia l'atto sessuale, osservato dal poeta con un misto di esclusione, paura e attrazione malinconica.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-[#c5a059] font-bold text-2xl mr-4">02</div>
+                            <div>
+                                <h5 class="font-bold">L'Inquietudine del Nido</h5>
+                                <p class="text-sm text-gray-600">Mentre la vita procede (i nuovi concepimenti), Pascoli rimane "sulla soglia", fedele al suo nido di morti e memorie.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-[#c5a059] font-bold text-2xl mr-4">03</div>
+                            <div>
+                                <h5 class="font-bold">Sinfonia dei Sensi</h5>
+                                <p class="text-sm text-gray-600">Sinestesie e immagini cromatiche (il rosso delle fragole, l'azzurro del cielo) creano un'atmosfera onirica.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="showPoem()" class="mt-8 bg-dark text-white px-10 py-4 hover:bg-[#c5a059] transition-all font-bold">Leggi il Testo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for details -->
+    <div id="main-modal" class="fixed inset-0 z-[100] hidden bg-black bg-opacity-90 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl max-h-[80vh] overflow-y-auto p-12 relative rounded-lg">
+            <button onclick="closeModal()" class="absolute top-4 right-6 text-4xl">&times;</button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12 px-8 text-center border-t border-gray-800">
+        <p class="text-sm tracking-widest text-gray-500 mb-4 uppercase">Celebrazione della Letteratura Italiana</p>
+        <div class="text-3xl font-bold italic mb-8">Giovanni Pascoli</div>
+        <div class="flex justify-center space-x-6 mb-8">
+            <a href="#" class="hover:text-[#c5a059]">Myricae</a>
+            <a href="#" class="hover:text-[#c5a059]">Canti di Castelvecchio</a>
+            <a href="#" class="hover:text-[#c5a059]">Poemi Conviviali</a>
+        </div>
+        <p class="text-xs text-gray-600">&copy; 2024 - Progetto Didattico Digitale</p>
+    </footer>
+
+    <script>
+        const apiKey = ""; // Chiamate API gestite dall'ambiente
+
+        async function generateImages() {
+            try {
+                // Generazione Immagine Gelsomino Notturno (Pascoli rimosso perché statico ora)
+                const gelsominoResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        instances: { prompt: "A poetic, nocturnal illustration of blooming jasmine flowers at night, dark indigo sky, a distant warm house light, symbolic and dreamy atmosphere, high artistic quality." },
+                        parameters: { sampleCount: 1 }
+                    })
+                });
+                const gelsominoData = await gelsominoResponse.json();
+                const gelsominoImg = document.getElementById('img-gelsomino');
+                gelsominoImg.src = `data:image/png;base64,${gelsominoData.predictions[0].bytesBase64Encoded}`;
+                gelsominoImg.classList.remove('opacity-0');
+                document.getElementById('loader-gelsomino').style.display = 'none';
+
+            } catch (error) {
+                console.error("Errore nella generazione immagini:", error);
+            }
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeModal() {
+            document.getElementById('main-modal').classList.add('hidden');
+        }
+
+        function openModal(type) {
+            const content = document.getElementById('modal-content');
+            document.getElementById('main-modal').classList.remove('hidden');
+            
+            if(type === 'bio') {
+                content.innerHTML = `
+                    <h2 class="text-3xl font-bold mb-6 italic">Biografia Dettagliata</h2>
+                    <div class="space-y-4 text-gray-700 leading-relaxed">
+                        <p><strong>1855:</strong> Nasce a San Mauro di Romagna.</p>
+                        <p><strong>1867:</strong> Assassinio del padre Ruggero. Seguono in pochi anni le morti della madre, della sorella e di due fratelli.</p>
+                        <p><strong>Gli Studi:</strong> Vince una borsa di studio a Bologna, dove diventa allievo di Giosuè Carducci. Partecipa a manifestazioni socialiste e viene arrestato (un'esperienza che lo porterà ad abbandonare la politica attiva per un socialismo umanitario).</p>
+                        <p><strong>Castelvecchio:</strong> Si stabilisce a Castelvecchio di Barga con la sorella Maria (Mariù), tentando di ricostruire il nido familiare originale, escludendo ogni relazione sentimentale esterna.</p>
+                        <p><strong>1912:</strong> Muore a Bologna a causa di un tumore.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function showPoem() {
+            const content = document.getElementById('modal-content');
+            document.getElementById('main-modal').classList.remove('hidden');
+            content.innerHTML = `
+                <h2 class="text-3xl font-bold mb-6 italic">Il Gelsomino Notturno</h2>
+                <div class="poem-text italic text-lg leading-loose text-center">
+                    E s’aprono i fiori notturni,<br>
+                    nell’ora che penso a’ miei cari.<br>
+                    Sono apparse in mezzo ai viburni<br>
+                    le farfalle crepuscolari.<br><br>
+                    Da un pezzo si tacquero i gridi:<br>
+                    là sola una casa bisbiglia.<br>
+                    Sotto l’ali dormono i nidi,<br>
+                    come gli occhi sotto le ciglia.<br><br>
+                    Dai calici aperti si esala<br>
+                    l’odore di fragole rosse.<br>
+                    Splende un lume là nella sala.<br>
+                    Nasce l’erba sopra le fosse.<br><br>
+                    ...
+                </div>
+                <div class="mt-8 p-4 bg-gray-100 rounded text-sm italic">
+                    Note: La poesia è un continuo gioco di contrasti tra la morte (le fosse, i cari defunti) e la vita che esplode (il fiore che si apre, il lume nella casa delle nozze).
+                </div>
+            `;
+        }
+
+        window.onload = generateImages;
+    </script>
 </body>
 </html>
